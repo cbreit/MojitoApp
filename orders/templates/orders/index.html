@@ -1,0 +1,51 @@
+{% extends 'orders/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Rx MojitoOrdersApp (Beta 0.1){% endblock %}
+
+{% block content %}
+
+    <h2>Select your drink</h2>
+    <br />
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+
+    <h3>Mojito is sold out for the bus trip.</h3>
+    <h3>You'll get the next ones in the evenening in the "hotel room party" ;-)</h3>
+    <br />
+    <form action="/orders/select" method="post"  class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% for choice in product_list %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice }}" />
+        <label for="choice{{ forloop.counter }}">{{ choice }}</label><br />
+    {% endfor %}
+
+        <input type="radio" name="choice" id="choice99" value="special drink" />
+        <label for="other">Other <i>(pls come to me in person)</i></label><br />
+
+        <br />
+
+        <table style="width:35%" class="table table-hover">
+            <tr>
+                <td><label for="wishes">Extra wishes: </label></td>
+                <td><input id="wishes" type="text" name="wishes" value="{{ current_name }}"></td>
+            </tr>
+            <tr>
+                <td><label for="name">Your name: </label></td>
+                <td><input id="name" type="text" name="name" value="{{ current_name }}"></td>
+            </tr>
+        </table>
+
+
+
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">
+           Submit
+        </button>
+      {% endbuttons %}
+
+    </form>
+
+{% endblock %}

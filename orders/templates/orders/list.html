@@ -1,0 +1,70 @@
+{% extends 'orders/base.html' %}
+
+{% load static %}
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'orders/style.css' %}" />
+
+
+
+{% block title %}Rx MojitoOrdersApp (Beta 0.1) - Orders List{% endblock %}
+
+{% block content %}
+
+<script type="text/javascript">
+    window.setTimeout(function () {
+    location.href = "/orders/list";
+}, 15000);
+</script>
+
+<div class="container">
+  <h2> Open Orders:</h2>
+
+
+  <table style="width:60%" class="table table-striped">
+    <tr bgcolor="#FF0000">
+      <th style="width:40%">Submission Time</th>
+      <th style="width:30%">Name</th>
+      <th style="width:30%">Drink</th>
+    </tr>
+
+      {% for order in orders %}
+      {% if order.ready == False %}
+        <tr>
+          <td>{{order.submitted_date |date:"H:i"}}</td>
+          <td>{{order.name}}</td>
+          <td>{{order.drink}}</td>
+        </tr>
+      {% endif %}
+      {% endfor %}
+  </table>
+
+  <br />
+
+  <h2> Finished Orders:</h2>
+
+  <table style="width:60%" class="table table-striped">
+    <tr bgcolor="#00FF00">
+      <th style="width:40%">Submission Time</th>
+      <th style="width:30%">Name</th>
+      <th style="width:30%">Drink</th>
+    </tr>
+
+      {% for order in orders %}
+      {% if order.ready is True %}
+        <tr>
+          <td>{{order.submitted_date |date:"H:i"}}</td>
+          <td>{{order.name}}</td>
+          <td>{{order.drink}}</td>
+        </tr>
+      {% endif %}
+      {% endfor %}
+  </table>
+
+</div>
+{% endblock %}
